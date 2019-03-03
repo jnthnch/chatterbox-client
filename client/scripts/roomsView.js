@@ -9,8 +9,27 @@ var RoomsView = {
 
   render: function() {
   },
+
   renderRoom: function(room) {
-    this.$select.append('<p>' + room + '</p>');
+    this.$select.append(`<option value=${room}>${room}</option>`);
+  },
+
+  displayAllRooms: function(data){
+    var roomsWithId={};
+    var arrayOfMessages = data.results;
+    for (var i =0 ; i < arrayOfMessages.length; i++){
+      if (roomsWithId[arrayOfMessages[i].roomname] === undefined ) {
+        roomsWithId[arrayOfMessages[i].roomname] = []
+      } else {
+        roomsWithId[arrayOfMessages[i].roomname].push(arrayOfMessages[i].objectId)
+      }
+      
+    }
+    var roomsArray = Object.keys(roomsWithId);
+    for (let i = 0; i < roomsArray.length; i++) {
+      this.renderRoom(roomsArray[i])
+    }
   }
+
 };
 
